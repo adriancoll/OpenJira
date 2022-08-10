@@ -14,7 +14,7 @@ const menuItems = ["Inbox", "Starred", "Send Email", "Draft"];
 
 export const Sidebar = () => {
   return (
-    <Drawer anchor="left" open={true} onClose={() => console.log("cerrando")}>
+    <Drawer anchor="left" open={false} onClose={() => console.log("cerrando")}>
       <Box
         sx={{
           width: 250,
