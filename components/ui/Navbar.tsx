@@ -7,6 +7,7 @@ export const Navbar = () => {
       <Toolbar>
         <IconButton size="large" edge="start">
           <MenuOutlined />
+          
         </IconButton>
 
         {/* Navigate home */}
