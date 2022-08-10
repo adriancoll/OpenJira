@@ -9,12 +9,17 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+import { useContext } from "react";
+import { UIContext, UIReducer } from "../../context/ui";
 
 const menuItems = ["Inbox", "Starred", "Send Email", "Draft"];
 
 export const Sidebar = () => {
+
+  const { sidemenuOpen, toggleSideMenu } = useContext(UIContext)
+
   return (
-    <Drawer anchor="left" open={false} onClose={() => console.log("cerrando")}>
+    <Drawer anchor="left" open={sidemenuOpen} onClose={toggleSideMenu}>
       <Box
         sx={{
           width: 250,
