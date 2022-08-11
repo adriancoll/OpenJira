@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { Card, CardContent, CardHeader, Grid } from "@mui/material";
 
 import { Layout } from "../components/layouts/Layout";
-import { EntryList } from "../components/ui";
+import { EntryList, NewEntry } from "../components/ui";
 
 const HomePage: NextPage = () => {
   return (
@@ -17,7 +17,7 @@ const HomePage: NextPage = () => {
           >
             <CardHeader title="Pendientes" />
             <CardContent>
-              {/* agregar entrada */}
+              <NewEntry />
               <EntryList status="pending" />
             </CardContent>
           </Card>

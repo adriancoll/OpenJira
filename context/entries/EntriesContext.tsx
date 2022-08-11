@@ -1,11 +1,11 @@
-import { createContext } from 'react'
+import { createContext } from "react";
 
-import { Entry } from '../../interfaces';
-
+import { Entry } from "../../interfaces";
 
 export interface EntriesContextProps {
-   entries: Entry[]
+  entries: Entry[];
+  //methiods
+  addEntry: (description: string) => void;
 }
-
 
 export const EntriesContext = createContext({} as EntriesContextProps);
