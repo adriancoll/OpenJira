@@ -1,15 +1,18 @@
 import { FC, useReducer } from "react";
+
+import { Entry } from "../../interfaces";
+
 import { EntriesContext, entriesReducer } from "./";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
 }
 export interface EntriesState {
-  entries: [];
+  entries: Entry[];
 }
 
 const ENTRIES_INITIAL_STATE: EntriesState = {
-  entries: [],
+  entries: []
 };
 
 export const EntriesProvider: FC<Props> = ({ children }) => {

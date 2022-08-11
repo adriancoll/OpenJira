@@ -10,7 +10,6 @@ export const entriesReducer = (state: EntriesState, action: EntriesActionType): 
         ...state,
         entries: [],
       };
-      break; 
     default:
       return state;
   }
