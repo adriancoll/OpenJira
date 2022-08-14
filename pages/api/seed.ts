@@ -17,12 +17,12 @@ export default async function handler(
     return res.status(401).json({ message: "No tiene acceso a este servicio" });
   }
 
-  await db.connect()
+  await db.connect();
 
-  await Entry.deleteMany()
-  await Entry.insertMany( seedData.entries )
+  await Entry.deleteMany();
+  await Entry.insertMany( seedData.entries );
 
-  await db.disconnect()
+  await db.disconnect();
 
   res.status(200).json({ message: "Processed successfully" });
 }

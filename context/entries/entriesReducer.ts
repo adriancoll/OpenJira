@@ -3,7 +3,8 @@ import { EntriesState } from "./EntriesProvider";
 
 type EntriesActionType =
   | { type: "[Entry] - ADD"; payload: Entry }
-  | { type: "[Entry] - Updated"; payload: Entry };
+  | { type: "[Entry] - Updated"; payload: Entry }
+  | { type: "[Entry] - Refresh-data"; payload: Entry[] }
 
 export const entriesReducer = (
   state: EntriesState,
@@ -27,6 +28,11 @@ export const entriesReducer = (
         }),
       };
 
+    case '[Entry] - Refresh-data':
+      return {
+        ...state,
+        entries: [ ...action.payload ]
+      }
     default:
       return state;
   }

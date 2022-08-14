@@ -20,16 +20,15 @@ const ENTRIES_INITIAL_STATE: EntriesState = {
 export const EntriesProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, ENTRIES_INITIAL_STATE);
 
-  const addEntry = (description: string) =>
-    dispatch({
+  const addEntry = async (description: string) => {
+    const { data } = await entriesApi.post<{ entry: Entry }>('/entries', {
+      description
+    })
+    return dispatch({
       type: "[Entry] - ADD",
-      payload: {
-        description,
-        _id: uuidv4(),
-        status: "pending",
-        createdAt: Date.now(),
-      },
+      payload: data.entry
     });
+  };
 
   const updateEntry = (payload: Entry) => {
     dispatch({ type: "[Entry] - Updated", payload });
@@ -37,14 +36,21 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
 
 
   const refreshEntries = async () => {
-    const { data } = await entriesApi.get('/entries')
-    console.log(data)
+    try {
+      const { data } = await entriesApi.get<{ entries: Entry[] }>('/entries')
+      dispatch({
+        type: "[Entry] - Refresh-data",
+        payload: data.entries
+      })
+    } catch (err) {
+      console.error('error fetching entries', err)
+    }
   }
-  
+
   useEffect(() => {
     refreshEntries()
   }, [])
-  
+
 
   return (
     <EntriesContext.Provider value={{ ...state, addEntry, updateEntry }}>
