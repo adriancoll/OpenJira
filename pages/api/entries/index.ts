@@ -14,11 +14,9 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<EntriesDataResponses>
 ) {
-  console.log('hola')
   switch (req.method) {
     case "GET":
       return getEntries(res);
-
     case "POST":
       return createEntry(req, res);
 
