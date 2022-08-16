@@ -7,7 +7,7 @@ export interface EntriesContextProps {
   //methiods
   addEntry: (description: string) => void;
   updateEntry: (payload: Entry, showSnackbar?: boolean) => void;
-  deleteEntry: (id: string) => void;
+  deleteEntry: (id: string, showSnackbar?: boolean) => void;
 }
 
 export const EntriesContext = createContext({} as EntriesContextProps);

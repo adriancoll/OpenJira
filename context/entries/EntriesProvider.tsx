@@ -54,8 +54,18 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     dispatch({ type: "[Entry] - Updated", payload: { ...entry } });
   };
 
-  const deleteEntry = async (id: string) => {
+  const deleteEntry = async (id: string, showSnackbar = true) => {
     await entriesApi.delete(`/entries/${id}`);
+    
+    enqueueSnackbar("Eliminado correctamente", {
+      variant: "info",
+      autoHideDuration: 1500,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "right",
+      },
+    });
+
     dispatch({
       type: "[Entry] - Delete",
       payload: id,

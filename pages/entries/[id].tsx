@@ -53,7 +53,7 @@ const EntryDetailPage: NextPage<Props> = ({ entry }) => {
     setTouched(true);
   };
 
-  const handleDelete = () => deleteEntry("");
+  const handleDelete = () => deleteEntry(entry._id);
 
   const onSave = () => {
     if (inputValue.trim().length === 0) return;
