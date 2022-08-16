@@ -1,6 +1,8 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 
+import { SnackbarProvider } from "notistack";
+
 // moment
 import moment from "moment";
 import "moment/min/locales";
@@ -14,14 +16,16 @@ import { EntriesProvider } from "../context/entries";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <EntriesProvider>
-      <UIProvider>
-        <ThemeProvider theme={darkTheme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </UIProvider>
-    </EntriesProvider>
+    <SnackbarProvider maxSnack={3}>
+      <EntriesProvider>
+        <UIProvider>
+          <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </UIProvider>
+      </EntriesProvider>
+    </SnackbarProvider>
   );
 }
 

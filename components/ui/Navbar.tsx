@@ -4,6 +4,7 @@ import { MenuOutlined } from "@mui/icons-material";
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 
 import { UIContext } from "../../context/ui";
+import NextLink from "next/link";
 
 export const Navbar = () => {
   const { toggleSideMenu } = useContext(UIContext);
@@ -16,7 +17,9 @@ export const Navbar = () => {
         </IconButton>
 
         {/* Navigate home */}
-        <Typography variant="h6">OpenJira</Typography>
+        <NextLink href='/' passHref>
+          <Typography variant="h6">OpenJira</Typography>
+        </NextLink >
       </Toolbar>
     </AppBar>
   );

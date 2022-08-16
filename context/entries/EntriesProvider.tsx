@@ -1,3 +1,4 @@
+import { useSnackbar } from "notistack";
 import { FC, useEffect, useReducer } from "react";
 
 import { Entry } from "../../interfaces";
@@ -19,6 +20,8 @@ const ENTRIES_INITIAL_STATE: EntriesState = {
 export const EntriesProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, ENTRIES_INITIAL_STATE);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const addEntry = async (description: string) => {
     const { data } = await entriesApi.post<{ entry: Entry }>("/entries", {
       description,
@@ -29,7 +32,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     });
   };
 
-  const updateEntry = async (payload: Entry) => {
+  const updateEntry = async (payload: Entry, showSnackbar = false ) => {
     console.log("Updating entry", payload);
     const {
       data: { entry },
@@ -37,15 +40,26 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
       `/entries/${payload._id}`,
       payload
     );
+
+    // mostrar snackbar
+    showSnackbar && enqueueSnackbar("Entrada actualizada", {
+      variant: "success",
+      autoHideDuration: 1500,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "right",
+      },
+    });
+
     dispatch({ type: "[Entry] - Updated", payload: { ...entry } });
   };
 
-  const deleteEntry = (id: string) => {
-    const response = entriesApi.delete(`/entries/${id}`);
+  const deleteEntry = async (id: string) => {
+    await entriesApi.delete(`/entries/${id}`);
     dispatch({
-      type: '[Entry] - Delete',
-      payload: id
-    })
+      type: "[Entry] - Delete",
+      payload: id,
+    });
   };
 
   const refreshEntries = async () => {

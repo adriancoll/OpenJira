@@ -1,9 +1,10 @@
-import { RestartAlt } from "@mui/icons-material";
-import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
-import { json } from "stream/consumers";
-import { EntriesDataResponses } from ".";
+
+import mongoose from "mongoose";
 import { db } from "../../../database";
+
+import { EntriesDataResponses } from ".";
+
 import { Entry, IEntry } from "../../../models";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -61,6 +62,9 @@ const updateEntry = async (
       { description, status },
       { runValidators: true, new: true }
     )) as IEntry;
+
+    console.log({ entry });
+
     await db.disconnect();
     return res.status(200).json({ entry });
   } catch (err: any) {
@@ -105,17 +109,13 @@ const deleteEntry = async (
   }
 
   try {
-
     await Entry.findByIdAndDelete(id);
     await db.disconnect();
     return res.status(200).json({ message: "Deleted successfully" });
-
   } catch (err) {
-
     await db.disconnect();
     return res
       .status(400)
       .json({ message: `Entry with id ${id} doesn't exist` });
-
   }
 };

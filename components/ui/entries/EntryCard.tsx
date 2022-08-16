@@ -11,6 +11,7 @@ import {
 
 import { Entry } from "../../../interfaces";
 import { UIContext } from "../../../context";
+import { useRouter } from "next/router";
 
 interface Props {
   entry: Entry;
@@ -33,12 +34,17 @@ export const EntryCard: FC<Props> = ({ entry }) => {
     endDragging();
   };
 
+  const router = useRouter()
+
+  const handleNavigation = () => router.push(`/entries/${entry._id}`);
+
   return (
     <Card
       sx={{
         marginBottom: 1,
       }}
       draggable
+      onClick={handleNavigation}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       // eventos de drag
