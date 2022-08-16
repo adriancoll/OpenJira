@@ -65,6 +65,8 @@ const EntryDetailPage: NextPage<Props> = ({ entry }) => {
     };
 
     updateEntry(updatedEntry, true);
+    setTouched(false)
+    
   };
 
   const hasErrors = useMemo(
