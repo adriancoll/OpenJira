@@ -26,11 +26,9 @@ export const EntryCard: FC<Props> = ({ entry }) => {
     const { dataTransfer } = event;
 
     dataTransfer.setData("entry_id", entry._id);
-
-    // todo: modificar el estado para indicar que estoy haciendo drag
   };
 
-  const onDragEnd = (event: DragEvent<HTMLDivElement>) => {
+  const onDragEnd = (_event: DragEvent<HTMLDivElement>) => {
     endDragging();
   };
 
