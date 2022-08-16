@@ -20,41 +20,54 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, ENTRIES_INITIAL_STATE);
 
   const addEntry = async (description: string) => {
-    const { data } = await entriesApi.post<{ entry: Entry }>('/entries', {
-      description
-    })
+    const { data } = await entriesApi.post<{ entry: Entry }>("/entries", {
+      description,
+    });
     return dispatch({
       type: "[Entry] - ADD",
-      payload: data.entry
+      payload: data.entry,
     });
   };
 
   const updateEntry = async (payload: Entry) => {
-    console.log('Updating entry', payload)
-    const { data: { entry } } = await entriesApi.put<{ entry: Entry }>(`/entries/${payload._id}`, payload)
+    console.log("Updating entry", payload);
+    const {
+      data: { entry },
+    } = await entriesApi.put<{ entry: Entry }>(
+      `/entries/${payload._id}`,
+      payload
+    );
     dispatch({ type: "[Entry] - Updated", payload: { ...entry } });
   };
 
+  const deleteEntry = (id: string) => {
+    const response = entriesApi.delete(`/entries/${id}`);
+    dispatch({
+      type: '[Entry] - Delete',
+      payload: id
+    })
+  };
 
   const refreshEntries = async () => {
     try {
-      const { data } = await entriesApi.get<{ entries: Entry[] }>('/entries')
+      const { data } = await entriesApi.get<{ entries: Entry[] }>("/entries");
       dispatch({
         type: "[Entry] - Refresh-data",
-        payload: data.entries
-      })
+        payload: data.entries,
+      });
     } catch (err) {
-      console.error('error fetching entries', err)
+      console.error("error fetching entries", err);
     }
-  }
+  };
 
   useEffect(() => {
-    refreshEntries()
-  }, [])
-
+    refreshEntries();
+  }, []);
 
   return (
-    <EntriesContext.Provider value={{ ...state, addEntry, updateEntry }}>
+    <EntriesContext.Provider
+      value={{ ...state, addEntry, updateEntry, deleteEntry }}
+    >
       {children}
     </EntriesContext.Provider>
   );
